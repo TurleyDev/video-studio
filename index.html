@@ -1,80 +1,21 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Video Studio — Anthropic IPO</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Video Studio — 2.5D Anthropic IPO</title>
 <style>
-:root{color-scheme:dark;font-family:Inter,system-ui,Arial,sans-serif;background:#0b1019;color:white}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:22px}.layout{display:grid;grid-template-columns:minmax(250px,400px) minmax(230px,330px);gap:24px;align-items:center}.video{position:relative;width:min(100%,400px);aspect-ratio:9/16;background:#05070c;overflow:hidden;border-radius:12px;box-shadow:0 20px 80px #0009;isolation:isolate}.scene{position:absolute;inset:0;opacity:0;overflow:hidden;will-change:opacity}.scene img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.08);will-change:transform;filter:contrast(1.03)}.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0002 0%,transparent 55%,#0004 100%);pointer-events:none}.scene.active{opacity:1}.timeline{position:absolute;bottom:0;left:0;height:4px;background:#ff9d62;width:0%;z-index:10}.controls{display:flex;gap:10px;flex-wrap:wrap}.controls button{border:1px solid #3d4658;background:#1b2638;color:#fff;padding:11px 16px;border-radius:9px;cursor:pointer;font-weight:650}.controls button:hover{background:#31435f}.side h1{font-size:24px;margin:0 0 10px}.side p{color:#aab5c5;line-height:1.55}.time{font-variant-numeric:tabular-nums;color:#ffad78;font-size:21px;margin:15px 0}.scene-title{font-size:14px;color:#d9e2ef;margin:10px 0}.hint{font-size:12px!important;color:#8995a5!important}@media(max-width:720px){.layout{grid-template-columns:minmax(0,400px);justify-content:center}.video{width:min(100%,360px)}body{padding:12px}}
-</style>
-</head>
-<body>
-<main class="layout">
-  <div class="video" id="video" aria-label="25-second vertical animated video preview">
-    <div class="scene"><img src="assets/scene1.png" alt="Anthropic IPO opening"></div>
-    <div class="scene"><img src="assets/scene2.png" alt="Anthropic AI revenue growth"></div>
-    <div class="scene"><img src="assets/scene3.png" alt="Anthropic valuation concerns"></div>
-    <div class="scene"><img src="assets/scene4.png" alt="Anthropic investment debate"></div>
-    <div class="timeline" id="timeline"></div>
-  </div>
-  <section class="side">
-    <h1>Video Studio</h1>
-    <p>Anthropic IPO · 25-second cinematic preview</p>
-    <div class="time" id="clock">00:00 / 00:25</div>
-    <div class="scene-title" id="label">Scene 1 — The $2 Trillion IPO</div>
-    <div class="controls"><button id="play">Pause</button><button id="restart">Restart</button></div>
-    <p class="hint">Four scenes with gentle Ken Burns motion and 0.8-second crossfades. This is a silent preview; narration and MP4 rendering will be added later.</p>
-  </section>
-</main>
+:root{font-family:Inter,system-ui,Arial,sans-serif;color-scheme:dark;color:#f6f8fc;background:#0a0f18}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}.layout{display:grid;grid-template-columns:minmax(260px,380px) minmax(240px,340px);align-items:center;gap:28px}.video{width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;background:#05080f;border-radius:12px;box-shadow:0 22px 80px #000b;isolation:isolate}.scene{position:absolute;inset:0;opacity:0;overflow:hidden;will-change:opacity}.layer{position:absolute;inset:-5%;background-position:center;background-size:cover;will-change:transform;backface-visibility:hidden}.base{filter:contrast(1.025) saturate(1.04)}.depth{background-size:cover;mask-image:linear-gradient(to bottom,transparent 0%,transparent 56%,#000 79%,#000 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 56%,#000 79%,#000 100%)}.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0002,transparent 45%,#0003);pointer-events:none}.glow{position:absolute;inset:-15%;pointer-events:none;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse at 80% 48%,#ff8e4318,transparent 47%);will-change:transform,opacity}.scene[data-index="2"] .glow,.scene[data-index="3"] .glow{background:radial-gradient(ellipse at 75% 55%,#ff26351d,transparent 50%)}.scan{position:absolute;inset:0;pointer-events:none;opacity:.13;background:linear-gradient(110deg,transparent 30%,#ffffff16 49%,transparent 65%);transform:translateX(-100%)}.market{position:absolute;inset:0;pointer-events:none;opacity:0}.market svg{width:100%;height:100%;overflow:visible}.market path{fill:none;stroke:#ff995d;stroke-width:1.1;vector-effect:non-scaling-stroke;stroke-dasharray:280;stroke-dashoffset:280;filter:drop-shadow(0 0 3px #ff884488)}.scene[data-index="2"] .market path{stroke:#fa4c55;filter:drop-shadow(0 0 3px #ff293888)}.progress{position:absolute;left:0;bottom:0;height:4px;background:#ff965d;z-index:12;width:0}.side h1{font-size:26px;margin:0 0 6px}.side p{color:#a9b5c6;line-height:1.55}.clock{font-size:22px;color:#ffb280;font-variant-numeric:tabular-nums;margin:16px 0}.label{font-weight:650;font-size:15px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.controls button{border:1px solid #455168;background:#1d293b;color:white;border-radius:9px;padding:11px 17px;font-weight:650;cursor:pointer}.controls button:hover{background:#32445f}.seek{width:100%;accent-color:#ff965d;cursor:pointer}.hint{font-size:13px}.mini{font-size:12px;color:#8190a6}.video::after{content:"";position:absolute;inset:0;border:1px solid #ffffff19;border-radius:12px;pointer-events:none;z-index:15}@media(max-width:740px){body{padding:12px}.layout{grid-template-columns:minmax(0,370px);gap:18px}}
+</style></head><body><main class="layout"><div class="video" id="video" aria-label="25-second cinematic Anthropic IPO preview"><div class="progress" id="progress"></div></div><section class="side"><h1>Video Studio · 2.5D</h1><p>Anthropic IPO — 25-second cinematic preview</p><div class="clock" id="clock">00:00 / 00:25</div><div class="label" id="label">Scene 1 — The $2 Trillion IPO</div><input class="seek" id="seek" aria-label="Seek video" type="range" min="0" max="25" step="0.01" value="0"><div class="controls"><button id="play">Pause</button><button id="restart">Restart</button></div><p class="hint">Layered foreground depth, camera drift, ambient light, moving reflections and scene-specific market animations. Transitions overlap smoothly.</p><p class="mini">This is a silent browser preview. People inside the original photos remain still; realistic walking needs separate footage or animation frames.</p></section></main>
 <script>
-// REUSABLE TEMPLATE SETTINGS — edit these for future projects.
-const SETTINGS = {
-  totalSeconds: 25,
-  crossfadeSeconds: 0.8,
-  scenes: [
-    { start:0, end:6, title:'Scene 1 — The $2 Trillion IPO', from:[1.04,0,0], to:[1.15,-1.5,-1] },
-    { start:6, end:12, title:'Scene 2 — Explosive AI Growth', from:[1.12,0,2], to:[1.04,0,-2] },
-    { start:12, end:18, title:'Scene 3 — Wall Street Warning', from:[1.04,0,-2], to:[1.13,0,2] },
-    { start:18, end:25, title:'Scene 4 — AI Revolution or Gamble?', from:[1.04,-1,0], to:[1.14,1,0] }
-  ]
-};
-const scenes=[...document.querySelectorAll('.scene')];
-const clock=document.querySelector('#clock'), label=document.querySelector('#label'), bar=document.querySelector('#timeline');
-const playButton=document.querySelector('#play');
-let current=0, playing=true, previous=null, raf=0;
-const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-const smooth=v=>{v=clamp(v);return v*v*(3-2*v)};
-const lerp=(a,b,t)=>a+(b-a)*t;
-const stamp=t=>`00:${String(Math.floor(t)).padStart(2,'0')}`;
-function render(t){
-  t=clamp(t,0,SETTINGS.totalSeconds);
-  SETTINGS.scenes.forEach((s,i)=>{
-    const fade=SETTINGS.crossfadeSeconds;
-    // Each new scene overlaps the previous scene for 0.8 seconds.
-    const begin=i===0?0:s.start-fade;
-    const enter=i===0?1:smooth((t-begin)/fade);
-    const exit=i===SETTINGS.scenes.length-1?1:1-smooth((t-(s.end-fade))/fade);
-    const visible=t>=begin&&t<=s.end ? Math.min(enter,exit) : 0;
-    scenes[i].style.opacity=String(visible);
-    const p=smooth((t-begin)/(s.end-begin));
-    const [z,x,y]=s.from.map((v,k)=>lerp(v,s.to[k],p));
-    scenes[i].firstElementChild.style.transform=`translate(${x}%,${y}%) scale(${z})`;
-  });
-  bar.style.width=`${t/SETTINGS.totalSeconds*100}%`;
-  clock.textContent=`${stamp(t)} / ${stamp(SETTINGS.totalSeconds)}`;
-  const active=SETTINGS.scenes.findIndex(s=>t<s.end);
-  label.textContent=SETTINGS.scenes[Math.max(0,active<0?SETTINGS.scenes.length-1:active)].title;
-}
-function tick(now){
-  if(previous!==null&&playing)current+=(now-previous)/1000;
-  previous=now;
-  if(current>=SETTINGS.totalSeconds){current=SETTINGS.totalSeconds;playing=false;playButton.textContent='Play';}
-  render(current);
-  if(playing)raf=requestAnimationFrame(tick);
-}
-function start(){if(current>=SETTINGS.totalSeconds)current=0;playing=true;previous=null;playButton.textContent='Pause';cancelAnimationFrame(raf);raf=requestAnimationFrame(tick)}
-playButton.onclick=()=>{if(playing){playing=false;cancelAnimationFrame(raf);playButton.textContent='Play'}else start()};
-document.querySelector('#restart').onclick=()=>{current=0;render(0);start()};
-render(0);start();
-</script>
-</body>
-</html>
+/* REUSABLE TEMPLATE: change image, duration and title for future videos. */
+const CONFIG={crossfade:1.15,scenes:[
+ {image:'assets/scene1.png',duration:6,title:'Scene 1 — The $2 Trillion IPO',camera:[1.04,-.8,.6,1.12,.8,-.7],depth:[.2,0,1.7,-1.3],market:false},
+ {image:'assets/scene2.png',duration:6,title:'Scene 2 — Explosive AI Growth',camera:[1.11,.6,1,1.04,-.6,-1],depth:[-1,1,1.4,-1],market:true},
+ {image:'assets/scene3.png',duration:6,title:'Scene 3 — Wall Street Warning',camera:[1.045,-.8,-.5,1.12,.5,.6],depth:[.8,-.7,-1,1.2],market:true},
+ {image:'assets/scene4.png',duration:7,title:'Scene 4 — AI Revolution or Gamble?',camera:[1.04,.5,1,1.115,-.6,-.7],depth:[-.6,.7,1.1,-1],market:false}
+]};
+const video=document.getElementById('video'),seek=document.getElementById('seek'),clock=document.getElementById('clock'),label=document.getElementById('label'),progress=document.getElementById('progress'),play=document.getElementById('play');
+const total=CONFIG.scenes.reduce((a,s)=>a+s.duration,0);seek.max=total;
+const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));const ease=x=>{x=clamp(x);return x*x*(3-2*x)};const mix=(a,b,p)=>a+(b-a)*p;
+let cursor=0;const scenes=CONFIG.scenes.map((s,i)=>{const start=cursor;cursor+=s.duration;const el=document.createElement('div');el.className='scene';el.dataset.index=i;el.innerHTML=`<div class="layer base"></div><div class="layer depth"></div><div class="glow"></div><div class="scan"></div><div class="market"><svg viewBox="0 0 100 180" preserveAspectRatio="none" aria-hidden="true"><path d="M 53 84 L 59 80 L 65 82 L 70 73 L 76 75 L 82 64 L 89 61 L 96 46"/></svg></div>`;el.querySelectorAll('.layer').forEach(x=>x.style.backgroundImage=`url("${s.image}")`);video.insertBefore(el,progress);return {...s,start,end:cursor,el,base:el.querySelector('.base'),depthEl:el.querySelector('.depth'),glow:el.querySelector('.glow'),scan:el.querySelector('.scan'),marketEl:el.querySelector('.market'),path:el.querySelector('path')};});
+function render(t){t=clamp(t,0,total);let active=scenes[0];for(let i=0;i<scenes.length;i++){const s=scenes[i],p=clamp((t-s.start)/s.duration),e=ease(p),f=CONFIG.crossfade;let alpha=i===0?1:ease((t-s.start)/f);if(i<scenes.length-1)alpha*=1-ease((t-(s.end-f))/f);s.el.style.opacity=alpha.toFixed(4);if(alpha>.04)active=s;const c=s.camera;const zoom=mix(c[0],c[3],e),x=mix(c[1],c[4],e),y=mix(c[2],c[5],e);s.base.style.transform=`translate3d(${x}%,${y}%,0) scale(${zoom})`;const d=s.depth;s.depthEl.style.transform=`translate3d(${x*1.4+mix(d[0],d[2],e)}%,${y*1.3+mix(d[1],d[3],e)}%,0) scale(${zoom*1.018})`;s.glow.style.opacity=(.25+.19*Math.sin(t*1.7+i)).toFixed(3);s.glow.style.transform=`translate3d(${Math.sin(t*.7+i)*4}%,${Math.cos(t*.8+i)*3}%,0)`;s.scan.style.transform=`translateX(${mix(-115,120,(t*.075+i*.31)%1)}%)`;s.marketEl.style.opacity=s.market?(.25*alpha).toFixed(3):0;s.path.style.strokeDashoffset=String(280*(1-ease(p)));}clock.textContent=`00:${String(Math.floor(t)).padStart(2,'0')} / 00:${total}`;label.textContent=active.title;seek.value=t;progress.style.width=`${100*t/total}%`;}
+let time=0,playing=true,last=null,frame;function tick(now){if(last!==null&&playing)time+=Math.min((now-last)/1000,.1);last=now;if(time>=total){time=total;playing=false;play.textContent='Play';}render(time);frame=requestAnimationFrame(tick)}frame=requestAnimationFrame(tick);
+play.onclick=()=>{if(time>=total)time=0;playing=!playing;play.textContent=playing?'Pause':'Play';last=null};document.getElementById('restart').onclick=()=>{time=0;playing=true;play.textContent='Pause';last=null;render(time)};seek.oninput=()=>{time=Number(seek.value);last=null;render(time)};document.addEventListener('visibilitychange',()=>{last=null});
+</script></body></html>
